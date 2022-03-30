@@ -6,7 +6,7 @@ void ExpensesFile::addExpenseToFile(Expense expense){
 
 	string newDate;
 	int date = expense.getDate();
-	newDate = AuxiliaryMethods::dateConverter(date);
+	newDate = DateMethods::dateConverter(date);
 
 	ostringstream temporaryString;
 	temporaryString << expense.getAmount();

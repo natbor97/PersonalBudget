@@ -14,6 +14,7 @@ using namespace std;
 #include "IncomesFile.h"
 #include "ExpensesFile.h"
 #include "AuxiliaryMethods.h"
+#include "DateMethods.h"
 
 class ExpensesAndIncomesManager {
 	const int LOGGED_USER_ID;

@@ -8,6 +8,7 @@
 #include "Markup.h"
 #include "XMLFile.h"
 #include "AuxiliaryMethods.h"
+#include "DateMethods.h"
 using namespace std;
 
 class IncomesFile: XMLFile {

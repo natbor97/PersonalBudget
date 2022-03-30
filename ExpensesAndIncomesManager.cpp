@@ -11,10 +11,10 @@ Income ExpensesAndIncomesManager::giveNewIncomeData() {
     char choice;
 
     cin>>choice;
-    if (choice=='T')
+    if (choice=='T' or choice=='t')
         date=getPresentDate();
-    else if (choice=='N') {
-        cout<<"Podaj date ktorej dotyczy przychod: [rrr-mm-dd] ";
+    else {
+        cout<<"Podaj date ktorej dotyczy przychod: [rrrr-mm-dd] ";
         date=insertDate();
     }
 
@@ -46,10 +46,10 @@ Expense ExpensesAndIncomesManager::giveNewExpenseData() {
     cout<<"Czy wydatek dotyczy dnia dzisiejszego? [T/N]" << endl;
     char choice;
     cin>>choice;
-    if (choice=='T')
+    if (choice=='T' or choice=='t')
         date=getPresentDate();
-    else if (choice=='N') {
-        cout<<"Podaj date ktorej dotyczy wydatek: [rrr-mm-dd] ";
+    else {
+        cout<<"Podaj date ktorej dotyczy wydatek: [rrrr-mm-dd] ";
         date=insertDate();
     }
 
@@ -103,17 +103,17 @@ int ExpensesAndIncomesManager::insertDate() {
     int newDate;
     string date;
     cin>>date;
-    date=AuxiliaryMethods::removeDashFromDate(date);
+    date=DateMethods::removeDashFromDate(date);
     newDate=AuxiliaryMethods::stringToInt(date);
 
     while(checkDateCorectness(newDate)==false) {
         cout<<"Niepoprawna data. Wprowadz date ponownie. "<<endl;
         cin>>date;
-        date=AuxiliaryMethods::removeDashFromDate(date);
+        date=DateMethods::removeDashFromDate(date);
         newDate=AuxiliaryMethods::stringToInt(date);
     }
 
-    date=AuxiliaryMethods::dateConverter(newDate);
+    date=DateMethods::dateConverter(newDate);
     vector <string> partOfDateContainer;
     stringstream ss(date);
     string item;
@@ -129,7 +129,7 @@ int ExpensesAndIncomesManager::insertDate() {
 void ExpensesAndIncomesManager::showIncomeData(Income income) {
     string newDate;
     int date=income.getDate();
-    newDate=AuxiliaryMethods::dateConverter(date);
+    newDate=DateMethods::dateConverter(date);
 
     cout<<"Data: "<<newDate;
     cout<<" Kategoria: "<<income.getItem();
@@ -139,7 +139,7 @@ void ExpensesAndIncomesManager::showIncomeData(Income income) {
 void ExpensesAndIncomesManager::showExpenseData(Expense expense) {
     string newDate;
     int date=expense.getDate();
-    newDate=AuxiliaryMethods::dateConverter(date);
+    newDate=DateMethods::dateConverter(date);
 
     cout<<"Data: "<<newDate;
     cout<<" Kategoria: "<<expense.getItem();
@@ -294,8 +294,8 @@ void ExpensesAndIncomesManager::currentMonthBalance() {
     auxFirstDate=AuxiliaryMethods::stringToInt(firstDate);
     auxSecondDate=AuxiliaryMethods::stringToInt(secondDate);
 
-    incomes=AuxiliaryMethods::sortingIncomesByDate(incomes);
-    expenses=AuxiliaryMethods::sortingExpensesByDate(expenses);
+    incomes=DateMethods::sortingIncomesByDate(incomes);
+    expenses=DateMethods::sortingExpensesByDate(expenses);
     showIncomesAndExpenses(auxFirstDate, auxSecondDate);
 }
 
@@ -331,8 +331,8 @@ void ExpensesAndIncomesManager::previousMonthBalance() {
     auxFirstDate=AuxiliaryMethods::stringToInt(firstDate);
     auxSecondDate=AuxiliaryMethods::stringToInt(secondDate);
 
-    incomes=AuxiliaryMethods::sortingIncomesByDate(incomes);
-    expenses=AuxiliaryMethods::sortingExpensesByDate(expenses);
+    incomes=DateMethods::sortingIncomesByDate(incomes);
+    expenses=DateMethods::sortingExpensesByDate(expenses);
     showIncomesAndExpenses(auxFirstDate, auxSecondDate);
 }
 
@@ -343,10 +343,18 @@ void ExpensesAndIncomesManager::chosenPeriodBalance() {
     firstDate=insertDate();
     cout<<"Podaj date, do ktorej przychody/wydatki maja byc liczone: ";
     secondDate=insertDate();
+
+    while(firstDate>secondDate) {
+            cout<<"Niepoprawne daty. Wprowadz daty ponownie"<<endl;
+            cout<<"Podaj date, OD ktorej przychody/wydatki maja byc liczone: ";
+            firstDate=insertDate();
+            cout<<"Podaj date, DO ktorej przychody/wydatki maja byc liczone: ";
+            secondDate=insertDate();
+    }
     cout<<endl;
 
-    incomes=AuxiliaryMethods::sortingIncomesByDate(incomes);
-    expenses=AuxiliaryMethods::sortingExpensesByDate(expenses);
+    incomes=DateMethods::sortingIncomesByDate(incomes);
+    expenses=DateMethods::sortingExpensesByDate(expenses);
 
     showIncomesAndExpenses(firstDate, secondDate);
 }

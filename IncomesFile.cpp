@@ -6,7 +6,7 @@ void IncomesFile::addIncomeToFile(Income income){
 
 	string newDate;
 	int date = income.getDate();
-	newDate = AuxiliaryMethods::dateConverter(date);
+	newDate = DateMethods::dateConverter(date);
 
 	ostringstream temporaryString;
 	temporaryString << income.getAmount();
